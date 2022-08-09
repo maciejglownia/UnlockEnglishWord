@@ -1,3 +1,12 @@
 <resources>
+
     <string name="app_name">Unlock English Word</string>
+    <string name="words_done">Done: %d words</string>
+    <string name="words_skipped">Skipped: %d</string>
+    <string name="instruction">Use letters to guess the word.</string>
+    <string name="enter_your_word">Enter your word</string>
+    <string name="tip">Tip</string>
+    <string name="definition">Definition</string>
+    <string name="skip">Skip</string>
+    <string name="check">Check</string>
 </resources>
