@@ -1,0 +1,8 @@
+Sources for the application Unlock English Word:
+
+1. Inspiration:
+    Android Basic in Kotlin (Unscramble app)
+    https://developer.android.com/courses/pathways/android-basics-kotlin-unit-3-pathway-3
+
+2. Main icon:
+    <a href="https://www.flaticon.com/free-icons/unlock" title="unlock icons">Unlock icons created by Uniconlabs - Flaticon</a>
