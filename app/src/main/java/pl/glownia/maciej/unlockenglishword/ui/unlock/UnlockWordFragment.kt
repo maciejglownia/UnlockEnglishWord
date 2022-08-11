@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import pl.glownia.maciej.unlockenglishword.databinding.FragmentUnlockWordBinding
+import pl.glownia.maciej.unlockenglishword.ui.UnlockWordViewModel
 
 class UnlockWordFragment : Fragment() {
 
