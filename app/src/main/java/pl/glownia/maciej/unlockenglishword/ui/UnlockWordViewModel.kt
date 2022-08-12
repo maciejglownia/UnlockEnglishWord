@@ -1,11 +1,9 @@
 package pl.glownia.maciej.unlockenglishword.ui
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import pl.glownia.maciej.unlockenglishword.ui.unlock.MAX_NUMBER_OF_WORDS
-import pl.glownia.maciej.unlockenglishword.ui.unlock.UnlockWordFragment.Companion.TAG
 import pl.glownia.maciej.unlockenglishword.ui.unlock.allWordsAndItsDefinitionList
 
 class UnlockWordViewModel : ViewModel() {
@@ -30,19 +28,22 @@ class UnlockWordViewModel : ViewModel() {
     private var _listOfDisplayedWordsToUnlock: MutableList<String> = mutableListOf()
     val listOfDisplayedWordsToUnlock: List<String>
         get() = _listOfDisplayedWordsToUnlock
-
     private lateinit var currentWord: String
 
     init {
-        Log.d("UnlockWordFragment", "UnlockWordViewModel created.")
         getNextWord()
     }
 
+    /**
+     * Gets random word from map. Shuffle it.
+     * Also check protects from shuffle to same state.
+     * Assigns currentWord to currentWordToUnlock, counts words already displayed and adds
+     * displayed word to the list, to protect from display it again.
+     */
     private fun getNextWord() {
         currentWord = allWordsAndItsDefinitionList.keys.random()
         val tempWord = currentWord.toCharArray()
         tempWord.shuffle()
-
         // Continue the loop until the word to unlock is not the same as the original one
         while (String(tempWord).equals(currentWord, false)) {
             tempWord.shuffle()
@@ -52,7 +53,7 @@ class UnlockWordViewModel : ViewModel() {
             getNextWord()
         } else {
             _currentWordToUnlock.value = String(tempWord)
-            _currentWordCount.value = (_currentWordCount.value)?.plus(1)
+            _currentWordCount.value = (_currentWordCount.value)?.inc()
             _listOfDisplayedWordsToUnlock.add(currentWord)
         }
     }
@@ -73,7 +74,7 @@ class UnlockWordViewModel : ViewModel() {
      */
     fun isUserWordCorrect(userWord: String): Boolean {
         if (userWord.equals(currentWord, true)) {
-            _wordsDoneCorrectly.value = (_wordsDoneCorrectly.value)?.plus(1)
+            countWordsDoneCorrectly()
             return true
         }
         return false
@@ -90,12 +91,17 @@ class UnlockWordViewModel : ViewModel() {
         getNextWord()
     }
 
+    /**
+     * Counts wordse when user decides to skip it.
+     */
     fun countSkippedWords() {
-        _wordsSkipped.value = (_wordsSkipped.value)?.plus(1)
+        _wordsSkipped.value = (_wordsSkipped.value)?.inc()
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        Log.d(TAG, "onCleared(): UnlockViewModel destroyed.")
+    /**
+     * Counts words when user guess it.
+     */
+    private fun countWordsDoneCorrectly() {
+        _wordsDoneCorrectly.value = (_wordsDoneCorrectly.value)?.inc()
     }
 }
