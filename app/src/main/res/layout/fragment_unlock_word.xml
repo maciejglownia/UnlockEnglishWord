@@ -45,7 +45,8 @@
                 android:text="@{@string/words_skipped(unlockWordViewModel.wordsSkipped)}"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Skipped: 0"/>
 
             <TextView
                 android:id="@+id/tv_word_to_unlock"

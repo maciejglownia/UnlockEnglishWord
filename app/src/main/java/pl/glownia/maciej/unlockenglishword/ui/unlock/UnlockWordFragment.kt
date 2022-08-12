@@ -1,7 +1,6 @@
 package pl.glownia.maciej.unlockenglishword.ui.unlock
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,12 +26,6 @@ class UnlockWordFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_unlock_word, container, false)
-        Log.d(TAG, "onCreateView: UnlockWordFragment created/re-created.")
-        Log.d(
-            TAG,
-            "Word: ${viewModel.currentWordToUnlock} " +
-                    "WordsDoneCorrectly: ${viewModel.wordsDoneCorrectly} "
-        )
         return binding.root
     }
 
@@ -94,7 +87,7 @@ class UnlockWordFragment : Fragment() {
 
     private fun showFinalDialog() {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Incredible!")
+            .setTitle("Result!")
             .setMessage(
                 "You accomplished all ${viewModel.listOfDisplayedWordsToUnlock.size} words!" +
                         "\n Correct: ${viewModel.wordsDoneCorrectly.value} " +
@@ -124,14 +117,5 @@ class UnlockWordFragment : Fragment() {
      */
     private fun exitProgram() {
         activity?.finish()
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        Log.d(TAG, "onDetach: UnlockWordFragment destroyed.")
-    }
-
-    companion object {
-        const val TAG = "UnlockWordFragment"
     }
 }
