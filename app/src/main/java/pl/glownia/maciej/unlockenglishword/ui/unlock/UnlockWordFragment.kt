@@ -44,17 +44,23 @@ class UnlockWordFragment : Fragment() {
         binding.btnDefinition.setOnClickListener { }
         binding.btnSkip.setOnClickListener { onSkipWord() }
 
-        // Set UI
-        updateNextWordOnScreen()
-        binding.tvWordsDoneCorrectly.text = getString(R.string.words_done_correctly, 0)
-        binding.tvWordsSkipped.text = getString(R.string.words_skipped, 0)
-    }
+        viewModel.currentWordToUnlock.observe(viewLifecycleOwner)
+        { newWord ->
+            binding.tvWordToUnlock.text = newWord
+        }
 
-    /**
-     * Displays the next word to unlock on the screen.
-     */
-    private fun updateNextWordOnScreen() {
-        binding.tvWordToUnlock.text = viewModel.currentWordToUnlock
+        viewModel.wordsDoneCorrectly.observe(
+            viewLifecycleOwner
+        ) { newWordsDoneCorrectly ->
+            binding.tvWordsDoneCorrectly.text =
+                getString(R.string.words_done_correctly, newWordsDoneCorrectly)
+        }
+        viewModel.wordsSkipped.observe(
+            viewLifecycleOwner
+        ) { newWordsSkipped ->
+            binding.tvWordsSkipped.text =
+                getString(R.string.words_skipped, newWordsSkipped)
+        }
     }
 
     /**
@@ -65,9 +71,7 @@ class UnlockWordFragment : Fragment() {
 
         if (viewModel.isUserWordCorrect(userWord)) {
             setErrorTextField(false)
-            updateNextWordOnScreen()
             if (viewModel.nextWord()) {
-                updateNextWordOnScreen()
             } else {
                 showFinalDialog()
             }
@@ -80,9 +84,9 @@ class UnlockWordFragment : Fragment() {
      * Skips the current word to unlock if user wants to omit it.
      */
     private fun onSkipWord() {
+        viewModel.countSkippedWords()
         if (viewModel.nextWord()) {
             setErrorTextField(false)
-            updateNextWordOnScreen()
         } else {
             showFinalDialog()
         }
@@ -104,7 +108,11 @@ class UnlockWordFragment : Fragment() {
     private fun showFinalDialog() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Incredible!")
-            .setMessage("You accomplished all ${viewModel.listOfDisplayedWordsToUnlock.size} words!")
+            .setMessage(
+                "You accomplished all ${viewModel.listOfDisplayedWordsToUnlock.size} words!" +
+                        "\n Correct: ${viewModel.wordsDoneCorrectly.value} " +
+                        "\n Skipped: ${viewModel.wordsSkipped.value}"
+            )
             .setCancelable(false)
             .setNegativeButton("Exit") { _, _ ->
                 exitProgram()
@@ -122,7 +130,6 @@ class UnlockWordFragment : Fragment() {
     private fun restartProgram() {
         viewModel.reinitializeData()
         setErrorTextField(false)
-        updateNextWordOnScreen()
     }
 
     /**
