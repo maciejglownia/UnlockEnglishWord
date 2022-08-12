@@ -12,17 +12,17 @@
         tools:context=".ui.unlock.UnlockWordFragment">
 
         <TextView
-            android:id="@+id/tv_word_count"
+            android:id="@+id/tv_words_done_correctly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/words_done"
+            android:text="@string/words_done_correctly"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Done: 3 words" />
 
         <TextView
-            android:id="@+id/tv_skipped"
+            android:id="@+id/tv_words_skipped"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/words_skipped"
@@ -42,7 +42,7 @@
             app:layout_constraintBottom_toTopOf="@id/tv_instruction"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_word_count"
+            app:layout_constraintTop_toBottomOf="@id/tv_words_done_correctly"
             tools:text="a word to unlock" />
 
         <TextView

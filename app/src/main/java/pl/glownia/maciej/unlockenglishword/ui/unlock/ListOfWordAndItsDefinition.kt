@@ -1,5 +1,8 @@
 package pl.glownia.maciej.unlockenglishword.ui.unlock
 
+const val MAX_NUMBER_OF_WORDS = 5
+
+
 // Map of english words as keys and their definitions as values
 val allWordsAndItsDefinitionList: Map<String, String> = mapOf(
         "a" to "indefinite article",
