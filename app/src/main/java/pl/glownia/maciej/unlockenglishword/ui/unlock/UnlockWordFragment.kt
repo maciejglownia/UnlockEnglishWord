@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -25,7 +26,7 @@ class UnlockWordFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentUnlockWordBinding.inflate(inflater, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_unlock_word, container, false)
         Log.d(TAG, "onCreateView: UnlockWordFragment created/re-created.")
         Log.d(
             TAG,
@@ -38,29 +39,14 @@ class UnlockWordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.unlockWordViewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+
         // TODO Setup a click listener for Tip and Definition buttons
         binding.btnCheck.setOnClickListener { onCheckWord() }
         binding.btnTip.setOnClickListener { }
         binding.btnDefinition.setOnClickListener { }
         binding.btnSkip.setOnClickListener { onSkipWord() }
-
-        viewModel.currentWordToUnlock.observe(viewLifecycleOwner)
-        { newWord ->
-            binding.tvWordToUnlock.text = newWord
-        }
-
-        viewModel.wordsDoneCorrectly.observe(
-            viewLifecycleOwner
-        ) { newWordsDoneCorrectly ->
-            binding.tvWordsDoneCorrectly.text =
-                getString(R.string.words_done_correctly, newWordsDoneCorrectly)
-        }
-        viewModel.wordsSkipped.observe(
-            viewLifecycleOwner
-        ) { newWordsSkipped ->
-            binding.tvWordsSkipped.text =
-                getString(R.string.words_skipped, newWordsSkipped)
-        }
     }
 
     /**
@@ -71,8 +57,7 @@ class UnlockWordFragment : Fragment() {
 
         if (viewModel.isUserWordCorrect(userWord)) {
             setErrorTextField(false)
-            if (viewModel.nextWord()) {
-            } else {
+            if (!viewModel.nextWord()) {
                 showFinalDialog()
             }
         } else {
@@ -84,7 +69,9 @@ class UnlockWordFragment : Fragment() {
      * Skips the current word to unlock if user wants to omit it.
      */
     private fun onSkipWord() {
-        viewModel.countSkippedWords()
+        if (viewModel.currentWordCount.value!! <= MAX_NUMBER_OF_WORDS) {
+            viewModel.countSkippedWords()
+        }
         if (viewModel.nextWord()) {
             setErrorTextField(false)
         } else {

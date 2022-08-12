@@ -1,142 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+        <variable
+            name="unlockWordViewModel"
+            type="pl.glownia.maciej.unlockenglishword.ui.UnlockWordViewModel" />
+
+<!--        <variable-->
+<!--            name="var_words_done_correctly"-->
+<!--            type="int" />-->
+<!--        -->
+<!--        <variable-->
+<!--            name="var_words_skipped"-->
+<!--            type="int" />-->
+
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        tools:context=".ui.unlock.UnlockWordFragment">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_words_done_correctly"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/words_done_correctly"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Done: 3 words" />
-
-        <TextView
-            android:id="@+id/tv_words_skipped"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/words_skipped"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <TextView
-            android:id="@+id/tv_word_to_unlock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:layout_marginBottom="32dp"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
-            android:textSize="48sp"
-            app:layout_constraintBottom_toTopOf="@id/tv_instruction"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_words_done_correctly"
-            tools:text="a word to unlock" />
-
-        <TextView
-            android:id="@+id/tv_instruction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/instruction"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toTopOf="@id/til_input_field_for_user_layout"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_word_to_unlock" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_input_field_for_user_layout"
-            style="@style/Widget.UnlockWord.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:hint="@string/enter_your_word"
-            app:errorIconDrawable="@drawable/ic_error"
-            app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_instruction">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_input_field_for_user"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textPersonName|textNoSuggestions"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/btn_tip"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="@string/tip"
-            app:layout_constraintEnd_toStartOf="@+id/btn_definition"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/til_input_field_for_user_layout" />
-
-        <Button
-            android:id="@+id/btn_definition"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="@string/definition"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_tip"
-            app:layout_constraintTop_toBottomOf="@id/til_input_field_for_user_layout" />
-
-        <Button
-            android:id="@+id/btn_skip"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="@string/skip"
-            app:layout_constraintEnd_toStartOf="@+id/btn_check"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_tip" />
-
-        <Button
-            android:id="@+id/btn_check"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="@string/check"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_skip"
-            app:layout_constraintTop_toBottomOf="@id/btn_definition" />
-
-        <TextView
-            android:id="@+id/tv_definition"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="48dp"
-            android:background="@drawable/frame_for_word_definition"
-            android:ellipsize="end"
-            android:maxLines="4"
             android:padding="16dp"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
-            android:textSize="18sp"
-            android:visibility="visible"
-            android:backgroundTint="@color/design_default_color_background"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_skip"
-            tools:layout_editor_absoluteY="0dp"
-            tools:text="{$word} - this is a definition of the word visible after user clicks on DEFINITION button" />
+            tools:context=".ui.unlock.UnlockWordFragment">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+            <TextView
+                android:id="@+id/tv_words_done_correctly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/words_done_correctly(unlockWordViewModel.wordsDoneCorrectly)}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Done: 3 words" />
+
+            <TextView
+                android:id="@+id/tv_words_skipped"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{@string/words_skipped(unlockWordViewModel.wordsSkipped)}"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_word_to_unlock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{unlockWordViewModel.currentWordToUnlock}"
+                android:layout_marginTop="48dp"
+                android:layout_marginBottom="32dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
+                android:textSize="48sp"
+                app:layout_constraintBottom_toTopOf="@id/tv_instruction"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_words_done_correctly"
+                tools:text="a word to unlock" />
+
+            <TextView
+                android:id="@+id/tv_instruction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/instruction"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@id/til_input_field_for_user_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_word_to_unlock" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_input_field_for_user_layout"
+                style="@style/Widget.UnlockWord.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:hint="@string/enter_your_word"
+                app:errorIconDrawable="@drawable/ic_error"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_instruction">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_input_field_for_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPersonName|textNoSuggestions"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_tip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/tip"
+                app:layout_constraintEnd_toStartOf="@+id/btn_definition"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/til_input_field_for_user_layout" />
+
+            <Button
+                android:id="@+id/btn_definition"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/definition"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_tip"
+                app:layout_constraintTop_toBottomOf="@id/til_input_field_for_user_layout" />
+
+            <Button
+                android:id="@+id/btn_skip"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/skip"
+                app:layout_constraintEnd_toStartOf="@+id/btn_check"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_tip" />
+
+            <Button
+                android:id="@+id/btn_check"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/check"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_skip"
+                app:layout_constraintTop_toBottomOf="@id/btn_definition" />
+
+            <TextView
+                android:id="@+id/tv_definition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="48dp"
+                android:background="@drawable/frame_for_word_definition"
+                android:ellipsize="end"
+                android:maxLines="4"
+                android:padding="16dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
+                android:textSize="18sp"
+                android:visibility="visible"
+                android:backgroundTint="@color/design_default_color_background"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_skip"
+                tools:layout_editor_absoluteY="0dp"
+                tools:text="{$word} - this is a definition of the word visible after user clicks on DEFINITION button" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</layout>
