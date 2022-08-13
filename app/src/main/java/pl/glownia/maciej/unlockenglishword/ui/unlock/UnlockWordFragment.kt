@@ -1,9 +1,12 @@
 package pl.glownia.maciej.unlockenglishword.ui.unlock
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -11,6 +14,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import pl.glownia.maciej.unlockenglishword.R
 import pl.glownia.maciej.unlockenglishword.databinding.FragmentUnlockWordBinding
 import pl.glownia.maciej.unlockenglishword.ui.UnlockWordViewModel
+
 
 class UnlockWordFragment : Fragment() {
 
@@ -53,9 +57,15 @@ class UnlockWordFragment : Fragment() {
      * Displays a definition after user clicks definition button
      */
     private fun onShowDefinition() {
+        view?.rootView?.let { context?.let { it1 -> hideKeyboardFrom(it1, it) } }
         val definition = viewModel.definitionOfDrawnNumber
         binding.tvDefinition.text = definition.value
         binding.tvDefinition.visibility = View.VISIBLE
+    }
+
+    private fun hideKeyboardFrom(context: Context, view: View) {
+        val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     /**
