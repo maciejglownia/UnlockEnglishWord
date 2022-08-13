@@ -37,9 +37,16 @@ class UnlockWordFragment : Fragment() {
 
         // TODO Setup a click listener for Tip and Definition buttons
         binding.btnCheck.setOnClickListener { onCheckWord() }
-        binding.btnTip.setOnClickListener { }
+        binding.btnTip.setOnClickListener { onShowTip() }
         binding.btnDefinition.setOnClickListener { onShowDefinition() }
         binding.btnSkip.setOnClickListener { onSkipWord() }
+    }
+
+    private fun onShowTip() {
+        viewModel.countTipClick()
+        val tip = viewModel.tip.value
+        binding.tvTip.text = tip
+        binding.tvTip.visibility = View.VISIBLE
     }
 
     /**
@@ -56,6 +63,7 @@ class UnlockWordFragment : Fragment() {
      */
     private fun onCheckWord() {
         makeDefinitionInvisibleForUser()
+        makeTipInvisibleForUser()
         val userWord = binding.etInputFieldForUser.text.toString()
 
         if (viewModel.isUserWordCorrect(userWord)) {
@@ -73,11 +81,13 @@ class UnlockWordFragment : Fragment() {
      */
     private fun onSkipWord() {
         makeDefinitionInvisibleForUser()
+        makeTipInvisibleForUser()
         if (viewModel.currentWordCount.value!! <= MAX_NUMBER_OF_WORDS) {
             viewModel.countSkippedWords()
         }
         if (viewModel.nextWord()) {
             setErrorTextField(false)
+            viewModel.clearClickTip()
         } else {
             showFinalDialog()
         }
@@ -132,5 +142,9 @@ class UnlockWordFragment : Fragment() {
 
     private fun makeDefinitionInvisibleForUser() {
         binding.tvDefinition.visibility = View.INVISIBLE
+    }
+
+    private fun makeTipInvisibleForUser() {
+        binding.tvTip.visibility = View.INVISIBLE
     }
 }

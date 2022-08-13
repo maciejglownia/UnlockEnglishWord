@@ -34,6 +34,14 @@ class UnlockWordViewModel : ViewModel() {
     val definitionOfDrawnNumber: LiveData<String>
         get() = _definitionOfDrawnNumber
 
+    private var _tip = MutableLiveData<String>()
+    val tip: LiveData<String>
+        get() = _tip
+
+    private var _clickTip = MutableLiveData(0)
+    val clickTip: LiveData<Int>
+        get() = _clickTip
+
     init {
         getNextWord()
     }
@@ -92,6 +100,7 @@ class UnlockWordViewModel : ViewModel() {
         _wordsDoneCorrectly.value = 0
         _currentWordCount.value = 0
         _wordsSkipped.value = 0
+        _clickTip.value = 0
         _listOfDisplayedWordsToUnlock.clear()
         getNextWord()
     }
@@ -108,5 +117,20 @@ class UnlockWordViewModel : ViewModel() {
      */
     private fun countWordsDoneCorrectly() {
         _wordsDoneCorrectly.value = (_wordsDoneCorrectly.value)?.inc()
+    }
+
+    fun countTipClick() {
+        _clickTip.value = (_clickTip.value)?.inc()
+        if (_clickTip.value!! <= currentWord.length) {
+            generateNextCharOfWordToUnlock()
+        }
+    }
+
+    private fun generateNextCharOfWordToUnlock() {
+        _tip.value = currentWord.substring(0, _clickTip.value!!)
+    }
+
+    fun clearClickTip() {
+        _clickTip.value = 0
     }
 }

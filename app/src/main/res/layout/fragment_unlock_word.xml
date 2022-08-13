@@ -49,18 +49,33 @@
                 tools:text="Skipped: 0"/>
 
             <TextView
+                android:id="@+id/tv_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{unlockWordViewModel.tip}"
+                android:layout_marginTop="48dp"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
+                android:textSize="18sp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@id/tv_word_to_unlock"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_words_done_correctly"
+                tools:text="tip char by char every click" />
+
+            <TextView
                 android:id="@+id/tv_word_to_unlock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{unlockWordViewModel.currentWordToUnlock}"
-                android:layout_marginTop="48dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="32dp"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline3"
                 android:textSize="48sp"
                 app:layout_constraintBottom_toTopOf="@id/tv_instruction"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_words_done_correctly"
+                app:layout_constraintTop_toBottomOf="@id/tv_tip"
                 tools:text="a word to unlock" />
 
             <TextView
