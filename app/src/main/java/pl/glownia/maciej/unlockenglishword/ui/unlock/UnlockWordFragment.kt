@@ -38,14 +38,24 @@ class UnlockWordFragment : Fragment() {
         // TODO Setup a click listener for Tip and Definition buttons
         binding.btnCheck.setOnClickListener { onCheckWord() }
         binding.btnTip.setOnClickListener { }
-        binding.btnDefinition.setOnClickListener { }
+        binding.btnDefinition.setOnClickListener { onShowDefinition() }
         binding.btnSkip.setOnClickListener { onSkipWord() }
+    }
+
+    /**
+     * Displays a definition after user clicks definition button
+     */
+    private fun onShowDefinition() {
+        val definition = viewModel.definitionOfDrawnNumber
+        binding.tvDefinition.text = definition.value
+        binding.tvDefinition.visibility = View.VISIBLE
     }
 
     /**
      * Checks the user word and displays the next word to unlock.
      */
     private fun onCheckWord() {
+        makeDefinitionInvisibleForUser()
         val userWord = binding.etInputFieldForUser.text.toString()
 
         if (viewModel.isUserWordCorrect(userWord)) {
@@ -62,6 +72,7 @@ class UnlockWordFragment : Fragment() {
      * Skips the current word to unlock if user wants to omit it.
      */
     private fun onSkipWord() {
+        makeDefinitionInvisibleForUser()
         if (viewModel.currentWordCount.value!! <= MAX_NUMBER_OF_WORDS) {
             viewModel.countSkippedWords()
         }
@@ -117,5 +128,9 @@ class UnlockWordFragment : Fragment() {
      */
     private fun exitProgram() {
         activity?.finish()
+    }
+
+    private fun makeDefinitionInvisibleForUser() {
+        binding.tvDefinition.visibility = View.INVISIBLE
     }
 }

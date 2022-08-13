@@ -30,6 +30,10 @@ class UnlockWordViewModel : ViewModel() {
         get() = _listOfDisplayedWordsToUnlock
     private lateinit var currentWord: String
 
+    private var _definitionOfDrawnNumber = MutableLiveData<String>()
+    val definitionOfDrawnNumber: LiveData<String>
+        get() = _definitionOfDrawnNumber
+
     init {
         getNextWord()
     }
@@ -42,6 +46,7 @@ class UnlockWordViewModel : ViewModel() {
      */
     private fun getNextWord() {
         currentWord = allWordsAndItsDefinitionList.keys.random()
+        _definitionOfDrawnNumber.value = allWordsAndItsDefinitionList[currentWord].toString()
         val tempWord = currentWord.toCharArray()
         tempWord.shuffle()
         // Continue the loop until the word to unlock is not the same as the original one
